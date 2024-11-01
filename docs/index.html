@@ -4,13 +4,13 @@
   <meta charset="utf-8">
   <meta name="description"
         content="Deformable Neural Radiance Fields creates free-viewpoint portraits (nerfies) from casually captured videos.">
-  <meta name="keywords" content="Nerfies, D-NeRF, NeRF">
+  <meta name="keywords" content="Naive Bayes, Bayesian Estimation">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script id="MathJax-script" async
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
   </script>
-  <title>Probabilistic Inference for Autonomous Driving </title>
+  <title>Probabilistic Inference for Autonomous Driving</title>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
@@ -318,7 +318,8 @@
         <div class="columns is-centered">
           <div class="column content">
             <p>
-              Using sequential observations and dynamilly update the system's state, we can predict the road type over time.
+              Using Bayesian Estimation, sequential observations and dynamically update the system's state, 
+              we can predict the road type over time. 
             </p>
             
             <video id="matting-video" controls playsinline height="100%">
@@ -353,6 +354,49 @@
   </div>
 </div>
 <br/>
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        
+        <!-- Naive Bayes Calculation -->
+        <h3 class="title is-4 has-text-centered">Naive Bayes Classification</h3>
+        <div class="content has-text-justified">
+          <p>
+            In the Naive Bayes classification method, we calculate the conditional probability for each road type hypothesis given observed features. By assuming feature independence, we simplify the computation of joint probabilities, allowing efficient classification. For each road type hypothesis \( h \), the probability is computed as follows:
+          </p>
+          <p>
+            \[
+            P(h|z) \propto P(h) \prod_{i=1}^{n} P(z_i|h)
+            \]
+          </p>
+          <p>
+            Here, \( z \) represents the observed features, and \( P(h|z) \) indicates the posterior probability of road type hypothesis \( h \) given these observations. The model selects the hypothesis with the highest posterior probability, effectively classifying the road type.
+          </p>
+        </div>
+
+        <!-- Bayesian Estimation Calculation -->
+        <h3 class="title is-4 has-text-centered">Bayesian Estimation for State Update</h3>
+        <div class="content has-text-justified">
+          <p>
+            Bayesian Estimation is used to update the system’s state dynamically based on sequential observations. Starting with an initial prior probability distribution for each road type, the model continuously refines its prediction as new data becomes available. The Bayesian update rule is applied as follows:
+          </p>
+          <p>
+            \[
+            P(h|z_{1:t}) = \frac{P(z_t|h) \cdot P(h|z_{1:t-1})}{P(z_t|z_{1:t-1})}
+            \]
+          </p>
+          <p>
+            In this formula, \( z_{1:t} \) represents all observations from time 1 to time \( t \), and \( P(h|z_{1:t}) \) is the updated probability of each hypothesis. This approach enables the model to account for uncertainties and make predictions based on continuously updated information, which is especially useful in dynamic environments like autonomous driving.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
 
         <!--/ Interpolating. -->
 
